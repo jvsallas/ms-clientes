@@ -1,13 +1,13 @@
-package com.mercadosallas.mercadosallas;
+package br.com.mercadosallas.clientes;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MercadoSallasApplication {
+public class ClientesMercadoSallasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MercadoSallasApplication.class, args);
+		SpringApplication.run(ClientesMercadoSallasApplication.class, args);
 	}
 
 }

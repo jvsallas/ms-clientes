@@ -1,10 +1,10 @@
-package com.mercadosallas.mercadosallas;
+package br.com.mercadosallas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MercadoSallasApplicationTests {
+class ClientesMercadoSallasApplicationTests {
 
 	@Test
 	void contextLoads() {
