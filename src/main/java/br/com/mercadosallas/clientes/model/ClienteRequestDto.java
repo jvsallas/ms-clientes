@@ -5,25 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "cliente")
-public class ClienteEntity {
+public class ClienteRequestDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @NotNull
     private String nome;
+    @NotNull
     private String sobrenome;
-    private LocalDate dataNascimento;
+    @NotNull
     private String cpf;
+    private LocalDate dataNascimento;
+
 
 }
