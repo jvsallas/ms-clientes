@@ -4,7 +4,8 @@ import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.model.ClienteRequestDto;
 import br.com.mercadosallas.clientes.model.ClienteResponseDto;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClienteMapper {
 
@@ -17,18 +18,6 @@ public class ClienteMapper {
         clienteEntity.setDataNascimento(clienteRequestDto.getDataNascimento());
 
         return clienteEntity;
-    }
-
-    public static ClienteResponseDto mapToResponse(ClienteEntity clienteEntity){
-
-        ClienteResponseDto clienteResponseDto = new ClienteResponseDto();
-        clienteResponseDto.setId(clienteEntity.getId());
-        clienteResponseDto.setNome(clienteEntity.getNome());
-        clienteResponseDto.setSobrenome(clienteEntity.getSobrenome());
-        clienteResponseDto.setCpf(clienteEntity.getCpf());
-        clienteResponseDto.setDataNascimento(clienteEntity.getDataNascimento());
-
-        return clienteResponseDto;
     }
 
 }

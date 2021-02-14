@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/clientes")
@@ -20,7 +20,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping
-    public ResponseEntity<ClienteResponseDto> adicionarCliente(@Valid @RequestBody ClienteRequestDto clienteRequestDto){
+    public ResponseEntity<ClienteResponseDto> adicionarCliente(@Valid @RequestBody ClienteRequestDto clienteRequestDto) {
 
         ClienteResponseDto clienteResponseDto = clienteService.adicionarCliente(clienteRequestDto);
 
@@ -28,9 +28,7 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ClienteResponseDto listarClientes(){
-        ClienteResponseDto clienteResponseDto = new ClienteResponseDto();
-//        clienteResponseDto.setId(UUID.randomUUID().toString());
-        return clienteResponseDto;
+    public ResponseEntity<List<ClienteResponseDto>> listarClientes() {
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.listarClientes());
     }
 }

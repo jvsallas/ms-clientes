@@ -8,6 +8,8 @@ import br.com.mercadosallas.clientes.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
 
@@ -16,9 +18,17 @@ public class ClienteService {
 
     public ClienteResponseDto adicionarCliente(ClienteRequestDto clienteRequestDto) {
 
-        ClienteEntity clienteEntity = ClienteMapper.mapToEntity(clienteRequestDto);
-        ClienteEntity save = clienteRepository.save(clienteEntity);
-        return ClienteMapper.mapToResponse(save);
+        ClienteEntity entity = clienteRepository.save(ClienteMapper.mapToEntity(clienteRequestDto));
+
+        return new ClienteResponseDto(entity);
+    }
+
+    public List<ClienteResponseDto> listarClientes() {
+
+        List<ClienteEntity> clientes = clienteRepository.findAll();
+
+        return ClienteResponseDto.converter(clientes);
+
     }
 
 }
