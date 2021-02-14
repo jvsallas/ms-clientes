@@ -1,6 +1,7 @@
 package br.com.mercadosallas.clientes.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,12 +13,17 @@ import java.time.LocalDate;
 @Entity(name = "cliente")
 public class ClienteEntity {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
     private String cpf;
+    private LocalDate dataCadastro = LocalDate.now();
 
 }

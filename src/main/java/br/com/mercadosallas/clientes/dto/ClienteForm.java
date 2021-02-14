@@ -1,18 +1,19 @@
-package br.com.mercadosallas.clientes.model;
+package br.com.mercadosallas.clientes.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
-public class ClienteRequestDto {
+public class ClienteForm {
 
-    @NotNull
+    @NotNull @NotEmpty
     private String nome;
-    @NotNull
+    @NotNull @NotEmpty
     private String sobrenome;
-    @NotNull
+    @NotNull @NotEmpty
     private String cpf;
     private LocalDate dataNascimento;
 
