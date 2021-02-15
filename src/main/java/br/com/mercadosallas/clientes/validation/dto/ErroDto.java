@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class ErroInterno {
+public class ErroDto {
     private String erro;
 }

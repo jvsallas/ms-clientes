@@ -1,5 +1,6 @@
 package br.com.mercadosallas.clientes.mapper;
 
+import br.com.mercadosallas.clientes.dto.AtualizacaoClienteForm;
 import br.com.mercadosallas.clientes.dto.ClienteDto;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
@@ -46,6 +47,14 @@ public class ClienteMapper {
         clienteDto.setDataCadastro(formatarData(clienteEntity.getDataCadastro()));
 
         return clienteDto;
+    }
+
+    public static ClienteEntity mapFromAtualizacao(AtualizacaoClienteForm formAtualizado, ClienteEntity clienteEntity){
+        clienteEntity.setNome(formAtualizado.getNome());
+        clienteEntity.setSobrenome(formAtualizado.getSobrenome());
+        clienteEntity.setEmail(formAtualizado.getEmail());
+        clienteEntity.setDataNascimento(formatarData(formAtualizado.getDataNascimento()));
+        return clienteEntity;
     }
 
     public static List<ClienteDto> mapToListDto(List<ClienteEntity> clientes){

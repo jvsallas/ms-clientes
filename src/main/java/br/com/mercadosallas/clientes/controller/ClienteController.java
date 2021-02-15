@@ -1,14 +1,15 @@
 package br.com.mercadosallas.clientes.controller;
 
-import br.com.mercadosallas.clientes.exception.ClienteNaoEncontradoException;
-import br.com.mercadosallas.clientes.dto.ClienteForm;
+import br.com.mercadosallas.clientes.dto.AtualizacaoClienteForm;
 import br.com.mercadosallas.clientes.dto.ClienteDto;
+import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<ClienteDto> adicionarCliente(@RequestBody @Valid ClienteForm clienteForm) {
 
         ClienteDto clienteDto = clienteService.adicionarCliente(clienteForm);
@@ -35,20 +37,24 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(clientes);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> listarCliente(@PathVariable String id) {
-        try {
 
-            ClienteDto clienteDto = clienteService.listarCliente(id);
+        ClienteDto clienteDto = clienteService.listarCliente(id);
 
-            return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
+    }
 
-        } catch (Exception ex) {
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ClienteDto> alterarDadosCliente(@PathVariable String id, @RequestBody @Valid AtualizacaoClienteForm form){
+        ClienteDto clienteDto = clienteService.alterarDadosCliente(id, form);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
+    }
 
-            if (ex instanceof ClienteNaoEncontradoException)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-            else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarCliente(@PathVariable String id){
+        clienteService.deletarCliente(id);
+        return ResponseEntity.noContent().build();
     }
 }

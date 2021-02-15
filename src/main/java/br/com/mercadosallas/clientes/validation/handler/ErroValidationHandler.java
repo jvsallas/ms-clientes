@@ -1,7 +1,8 @@
 package br.com.mercadosallas.clientes.validation.handler;
 
 import br.com.mercadosallas.clientes.validation.dto.ErroFormularioDto;
-import br.com.mercadosallas.clientes.validation.dto.ErroInterno;
+import br.com.mercadosallas.clientes.validation.dto.ErroDto;
+import br.com.mercadosallas.clientes.validation.exception.ClienteNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -48,8 +49,14 @@ public class ErroValidationHandler {
 
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ErroInterno handleGenerico(Exception exception) {
-        return new ErroInterno("Ocorreu um inesperado: " + exception.getMessage());
+    public ErroDto handleGenerico(Exception exception) {
+        return new ErroDto("Ocorreu um inesperado: " + exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ClienteNaoEncontradoException.class)
+    public ErroDto handleClienteNotFound(ClienteNaoEncontradoException exception) {
+        return new ErroDto(exception.getMessage());
     }
 
 
