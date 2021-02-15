@@ -21,14 +21,14 @@ public class ClienteService {
 
         ClienteEntity entity = clienteRepository.save(ClienteMapper.mapToEntity(clienteForm));
 
-        return new ClienteDto(entity);
+        return ClienteMapper.mapToDto(entity);
     }
 
     public List<ClienteDto> listarClientes() {
 
         List<ClienteEntity> clientes = clienteRepository.findAll();
 
-        return ClienteDto.converter(clientes);
+        return ClienteMapper.mapToListDto(clientes);
 
     }
 
@@ -38,6 +38,6 @@ public class ClienteService {
         if (!clienteOpt.isPresent())
             throw new RuntimeException("Cliente não encontrado");
 
-        return new ClienteDto(clienteOpt.get());
+        return ClienteMapper.mapToDto(clienteOpt.get());
     }
 }
