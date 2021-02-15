@@ -1,5 +1,6 @@
 package br.com.mercadosallas.clientes.service;
 
+import br.com.mercadosallas.clientes.exception.ClienteNaoEncontradoException;
 import br.com.mercadosallas.clientes.mapper.ClienteMapper;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
@@ -8,6 +9,8 @@ import br.com.mercadosallas.clientes.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +22,9 @@ public class ClienteService {
 
     public ClienteDto adicionarCliente(ClienteForm clienteForm) {
 
-        ClienteEntity entity = clienteRepository.save(ClienteMapper.mapToEntity(clienteForm));
+        ClienteEntity clienteEntity = ClienteMapper.mapToEntity(clienteForm);
+
+        ClienteEntity entity = clienteRepository.save(clienteEntity);
 
         return ClienteMapper.mapToDto(entity);
     }

@@ -1,13 +1,17 @@
 package br.com.mercadosallas.clientes.mapper;
 
 import br.com.mercadosallas.clientes.dto.ClienteDto;
-import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
+import br.com.mercadosallas.clientes.model.ClienteEntity;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClienteMapper {
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static ClienteEntity mapToEntity(ClienteForm clienteForm){
 
@@ -15,9 +19,18 @@ public class ClienteMapper {
         clienteEntity.setNome(clienteForm.getNome());
         clienteEntity.setSobrenome(clienteForm.getSobrenome());
         clienteEntity.setCpf(clienteForm.getCpf());
-        clienteEntity.setDataNascimento(clienteForm.getDataNascimento());
+        clienteEntity.setEmail(clienteForm.getEmail());
+        clienteEntity.setDataNascimento(formatarData(clienteForm.getDataNascimento()));
 
         return clienteEntity;
+    }
+
+    private static LocalDate formatarData(String dataString) {
+        return LocalDate.parse(dataString, formatter);
+    }
+
+    private static String formatarData(LocalDate data) {
+        return data.format(formatter);
     }
 
 
@@ -25,11 +38,12 @@ public class ClienteMapper {
 
         ClienteDto clienteDto = new ClienteDto();
         clienteDto.setId(clienteEntity.getId());
-        clienteDto.setNome(clienteDto.getNome());
-        clienteDto.setSobrenome(clienteDto.getSobrenome());
-        clienteDto.setCpf(clienteDto.getCpf());
-        clienteDto.setDataNascimento(clienteDto.getDataNascimento());
-        clienteDto.setDataCadastro(clienteEntity.getDataCadastro());
+        clienteDto.setNome(clienteEntity.getNome());
+        clienteDto.setSobrenome(clienteEntity.getSobrenome());
+        clienteDto.setCpf(clienteEntity.getCpf());
+        clienteDto.setEmail(clienteEntity.getEmail());
+        clienteDto.setDataNascimento(formatarData(clienteEntity.getDataNascimento()));
+        clienteDto.setDataCadastro(formatarData(clienteEntity.getDataCadastro()));
 
         return clienteDto;
     }

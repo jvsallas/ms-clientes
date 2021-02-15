@@ -1,13 +1,15 @@
 package br.com.mercadosallas.clientes.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Getter
 public class ClienteNaoEncontradoException extends RuntimeException {
     private static final long serialVersionUID = 4010655958693219577L;
 
-    private String mensagem;
-    private Integer statusCode;
+    private String message;
+
+    public ClienteNaoEncontradoException(String message) {
+        super(message);
+        this.message = message;
+    }
 }

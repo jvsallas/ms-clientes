@@ -23,6 +23,7 @@ public class ClienteEntity {
     private String sobrenome;
     private LocalDate dataNascimento;
     private String cpf;
+    private String email;
     private LocalDate dataCadastro = LocalDate.now();
 
 }

@@ -20,7 +20,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping
-    public ResponseEntity<ClienteDto> adicionarCliente(@Valid @RequestBody ClienteForm clienteForm) {
+    public ResponseEntity<ClienteDto> adicionarCliente(@RequestBody @Valid ClienteForm clienteForm) {
 
         ClienteDto clienteDto = clienteService.adicionarCliente(clienteForm);
 
