@@ -38,9 +38,17 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> listarCliente(@PathVariable String id) {
+    public ResponseEntity<?> listarClientePorId(@PathVariable String id) {
 
-        ClienteDto clienteDto = clienteService.listarCliente(id);
+        ClienteDto clienteDto = clienteService.listarClientePorId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<?> listarClientePorCpf(@PathVariable String cpf) {
+
+        ClienteDto clienteDto = clienteService.listarClientePorCpf(cpf);
 
         return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }

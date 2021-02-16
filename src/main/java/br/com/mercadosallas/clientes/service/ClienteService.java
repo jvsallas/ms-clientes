@@ -3,12 +3,12 @@ package br.com.mercadosallas.clientes.service;
 import br.com.mercadosallas.clientes.dto.AtualizacaoClienteForm;
 import br.com.mercadosallas.clientes.dto.ClienteDto;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
-import br.com.mercadosallas.clientes.validation.exception.ClienteNaoEncontradoException;
 import br.com.mercadosallas.clientes.mapper.ClienteMapper;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.repository.ClienteRepository;
+import br.com.mercadosallas.clientes.validation.exception.ClienteNaoEncontradoException;
+import br.com.mercadosallas.clientes.validation.exception.CpfJaCadastradoException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +21,11 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     public ClienteDto adicionarCliente(ClienteForm clienteForm) {
+
+        Optional<ClienteEntity> clienteByCpf = findByCpf(clienteForm.getCpf());
+
+        if (clienteByCpf.isPresent())
+            throw new CpfJaCadastradoException("CPF informado já cadastrado.");
 
         ClienteEntity clienteEntity = ClienteMapper.mapToEntity(clienteForm);
 
@@ -37,7 +42,7 @@ public class ClienteService {
 
     }
 
-    public ClienteDto listarCliente(String id) {
+    public ClienteDto listarClientePorId(String id) {
 
         ClienteEntity clienteEntity = validarClienteExistente(id);
 
@@ -59,12 +64,28 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
+    public ClienteDto listarClientePorCpf(String cpf) {
+
+        ClienteEntity clienteEntity = validarClientePorCpf(cpf);
+
+        return ClienteMapper.mapToDto(clienteEntity);
+    }
+
     private ClienteEntity validarClienteExistente(String id) {
         Optional<ClienteEntity> clienteOpt = clienteRepository.findById(id);
 
-        if (clienteOpt.isPresent())
-            return clienteOpt.get();
-        else
-            throw new ClienteNaoEncontradoException(String.format("Cliente não encontrado para o id %s", id));
+        return clienteOpt.orElseThrow(() ->
+                new ClienteNaoEncontradoException(String.format("Cliente não encontrado para o id %s", id)));
+    }
+
+    private ClienteEntity validarClientePorCpf(String cpf) {
+        Optional<ClienteEntity> clienteOpt = findByCpf(cpf);
+
+        return clienteOpt.orElseThrow(
+                () -> new ClienteNaoEncontradoException(String.format("Cliente não encontrado para o cpf %s", cpf)));
+    }
+
+    private Optional<ClienteEntity> findByCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf);
     }
 }

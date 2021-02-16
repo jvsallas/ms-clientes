@@ -3,6 +3,7 @@ package br.com.mercadosallas.clientes.validation.handler;
 import br.com.mercadosallas.clientes.validation.dto.ErroFormularioDto;
 import br.com.mercadosallas.clientes.validation.dto.ErroDto;
 import br.com.mercadosallas.clientes.validation.exception.ClienteNaoEncontradoException;
+import br.com.mercadosallas.clientes.validation.exception.CpfJaCadastradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -25,7 +26,7 @@ public class ErroValidationHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ErroFormularioDto> handle(MethodArgumentNotValidException exception) {
+    public List<ErroFormularioDto> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         List<ErroFormularioDto> errosForm = new ArrayList<>();
 
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
@@ -43,19 +44,25 @@ public class ErroValidationHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DateTimeException.class)
-    public String handleData(DateTimeException exception) {
+    public String handleDateTimeException(DateTimeException exception) {
         return "Ocorreu um erro ao formatar a data";
     }
 
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public ErroDto handleGenerico(Exception exception) {
+    public ErroDto handleException(Exception exception) {
         return new ErroDto("Ocorreu um inesperado: " + exception.getMessage());
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ClienteNaoEncontradoException.class)
-    public ErroDto handleClienteNotFound(ClienteNaoEncontradoException exception) {
+    public ErroDto handleClienteNaoEncontradoException(ClienteNaoEncontradoException exception) {
+        return new ErroDto(exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ExceptionHandler(CpfJaCadastradoException.class)
+    public ErroDto handleCpfJaCadastradoException(CpfJaCadastradoException exception) {
         return new ErroDto(exception.getMessage());
     }
 

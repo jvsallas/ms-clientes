@@ -50,10 +50,12 @@ public class ClienteMapper {
     }
 
     public static ClienteEntity mapFromAtualizacao(AtualizacaoClienteForm formAtualizado, ClienteEntity clienteEntity){
+
         clienteEntity.setNome(formAtualizado.getNome());
         clienteEntity.setSobrenome(formAtualizado.getSobrenome());
         clienteEntity.setEmail(formAtualizado.getEmail());
         clienteEntity.setDataNascimento(formatarData(formAtualizado.getDataNascimento()));
+
         return clienteEntity;
     }
 
