@@ -5,17 +5,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
-public class AtualizacaoClienteForm {
+public class ClienteAtualizacaoForm {
 
     @JsonProperty("nome")
     private String nome;
+
     @JsonProperty("sobrenome")
     private String sobrenome;
-    @JsonProperty("email")
-    private String email;
+
     @JsonProperty("data_nascimento")
     private String dataNascimento;
 }

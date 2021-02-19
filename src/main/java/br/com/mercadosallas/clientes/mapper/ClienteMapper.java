@@ -18,6 +18,7 @@ public class ClienteMapper {
         clienteEntity.setCpf(clienteForm.getCpf());
         clienteEntity.setEmail(clienteForm.getEmail());
         clienteEntity.setDataNascimento(DataUtils.formatar(clienteForm.getDataNascimento()));
+        clienteEntity.setTelefones(TelefoneMapper.mapToListEntity(clienteForm.getTelefones()));
 
         return clienteEntity;
     }
@@ -33,6 +34,7 @@ public class ClienteMapper {
         clienteDto.setEmail(clienteEntity.getEmail());
         clienteDto.setDataNascimento(DataUtils.formatar(clienteEntity.getDataNascimento()));
         clienteDto.setDataCadastro(DataUtils.formatar(clienteEntity.getDataCadastro()));
+        clienteDto.setTelefones(TelefoneMapper.mapToListDto(clienteEntity.getTelefones()));
 
         return clienteDto;
     }

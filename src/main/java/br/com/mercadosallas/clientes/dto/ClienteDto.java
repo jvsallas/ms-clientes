@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -29,5 +29,9 @@ public class ClienteDto {
 
     @JsonProperty("data_cadastro")
     private String dataCadastro;
+
+    @JsonProperty("telefones")
+    private List<TelefoneDto> telefones;
+
 
 }
