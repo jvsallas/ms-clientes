@@ -1,14 +1,14 @@
-package br.com.mercadosallas.clientes.validation.exception;
+package br.com.mercadosallas.clientes.exception.exceptions;
 
 import lombok.Getter;
 
 @Getter
-public class CpfJaCadastradoException extends RuntimeException {
+public class CpfAlreadyExistsException extends RuntimeException {
     private static final long serialVersionUID = 3120585767759956829L;
 
     private String message;
 
-    public CpfJaCadastradoException(String message) {
+    public CpfAlreadyExistsException(String message) {
         super();
         this.message = message;
     }

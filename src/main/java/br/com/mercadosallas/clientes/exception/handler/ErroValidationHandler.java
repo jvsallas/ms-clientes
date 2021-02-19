@@ -1,9 +1,10 @@
-package br.com.mercadosallas.clientes.validation.handler;
+package br.com.mercadosallas.clientes.exception.handler;
 
-import br.com.mercadosallas.clientes.validation.dto.ErroFormularioDto;
-import br.com.mercadosallas.clientes.validation.dto.ErroDto;
-import br.com.mercadosallas.clientes.validation.exception.ClienteNaoEncontradoException;
-import br.com.mercadosallas.clientes.validation.exception.CpfJaCadastradoException;
+import br.com.mercadosallas.clientes.exception.dto.ErroFormularioDto;
+import br.com.mercadosallas.clientes.exception.dto.ErroDto;
+import br.com.mercadosallas.clientes.exception.exceptions.ClienteNotFoundException;
+import br.com.mercadosallas.clientes.exception.exceptions.CpfAlreadyExistsException;
+import br.com.mercadosallas.clientes.exception.exceptions.InvalidEmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -55,14 +56,20 @@ public class ErroValidationHandler {
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ClienteNaoEncontradoException.class)
-    public ErroDto handleClienteNaoEncontradoException(ClienteNaoEncontradoException exception) {
+    @ExceptionHandler(ClienteNotFoundException.class)
+    public ErroDto handleClienteNaoEncontradoException(ClienteNotFoundException exception) {
         return new ErroDto(exception.getMessage());
     }
 
     @ResponseStatus(code = HttpStatus.CONFLICT)
-    @ExceptionHandler(CpfJaCadastradoException.class)
-    public ErroDto handleCpfJaCadastradoException(CpfJaCadastradoException exception) {
+    @ExceptionHandler(CpfAlreadyExistsException.class)
+    public ErroDto handleCpfJaCadastradoException(CpfAlreadyExistsException exception) {
+        return new ErroDto(exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidEmailException.class)
+    public ErroDto handleInvalidEmailException(InvalidEmailException exception) {
         return new ErroDto(exception.getMessage());
     }
 

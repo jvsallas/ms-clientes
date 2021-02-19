@@ -1,4 +1,4 @@
-package br.com.mercadosallas.clientes.validation.dto;
+package br.com.mercadosallas.clientes.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

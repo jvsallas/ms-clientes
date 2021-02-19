@@ -3,24 +3,19 @@ package br.com.mercadosallas.clientes.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 public class AtualizacaoClienteForm {
-    @NotNull
-    @NotEmpty
+
+    @JsonProperty("nome")
     private String nome;
-
-    @NotNull @NotEmpty
+    @JsonProperty("sobrenome")
     private String sobrenome;
-
-    @Email
+    @JsonProperty("email")
     private String email;
-
     @JsonProperty("data_nascimento")
     private String dataNascimento;
 }

@@ -55,7 +55,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ClienteDto> alterarDadosCliente(@PathVariable String id, @RequestBody @Valid AtualizacaoClienteForm form){
+    public ResponseEntity<ClienteDto> alterarDadosCliente(@PathVariable String id, @RequestBody AtualizacaoClienteForm form){
         ClienteDto clienteDto = clienteService.alterarDadosCliente(id, form);
         return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }
