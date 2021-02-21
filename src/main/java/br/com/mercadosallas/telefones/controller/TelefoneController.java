@@ -52,6 +52,5 @@ public class TelefoneController {
     public ResponseEntity<?> deletarTelefone(@PathVariable String idCliente, @PathVariable Long idTelefone) {
         telefoneService.deletarTelefone(idCliente, idTelefone);
         return ResponseEntity.noContent().build();
-
     }
 }

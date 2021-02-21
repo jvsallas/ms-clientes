@@ -40,7 +40,7 @@ public class TelefoneService {
         TelefoneEntity telefone = telefoneRepository.save(telefoneEntity);
 
         return TelefoneMapper.mapToDto(telefone);
-        
+
     }
 
     public List<TelefoneDto> listarTelefonesDoCliente(String idCliente) {
