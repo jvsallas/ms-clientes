@@ -1,4 +1,4 @@
-package br.com.mercadosallas.clientes.dto;
+package br.com.mercadosallas.telefones.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

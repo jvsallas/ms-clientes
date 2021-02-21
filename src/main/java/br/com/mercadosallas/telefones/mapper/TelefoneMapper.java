@@ -1,8 +1,8 @@
-package br.com.mercadosallas.clientes.mapper;
+package br.com.mercadosallas.telefones.mapper;
 
-import br.com.mercadosallas.clientes.dto.TelefoneDto;
-import br.com.mercadosallas.clientes.dto.TelefoneForm;
-import br.com.mercadosallas.clientes.model.TelefoneEntity;
+import br.com.mercadosallas.telefones.dto.TelefoneDto;
+import br.com.mercadosallas.telefones.dto.TelefoneForm;
+import br.com.mercadosallas.telefones.model.TelefoneEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;

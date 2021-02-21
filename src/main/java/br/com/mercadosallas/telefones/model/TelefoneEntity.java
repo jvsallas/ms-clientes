@@ -1,5 +1,6 @@
-package br.com.mercadosallas.clientes.model;
+package br.com.mercadosallas.telefones.model;
 
+import br.com.mercadosallas.clientes.model.ClienteEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,9 +16,13 @@ public class TelefoneEntity {
     @Column(name = "ddd")
     private String ddd;
 
-    @Column(name = "numero", unique = true)
+    @Column(name = "numero")
     private String numero;
 
     @Column(name = "tipo")
     private String tipo;
+
+    @Column(name = "id_cliente")
+    private String idCliente;
+
 }

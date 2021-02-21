@@ -1,11 +1,10 @@
-package br.com.mercadosallas.clientes.exception.handler;
+package br.com.mercadosallas.handler;
 
 import br.com.mercadosallas.clientes.exception.dto.ErroDto;
 import br.com.mercadosallas.clientes.exception.dto.ErroFormularioDto;
-import br.com.mercadosallas.clientes.exception.exceptions.ClienteNotFoundException;
-import br.com.mercadosallas.clientes.exception.exceptions.CpfAlreadyExistsException;
-import br.com.mercadosallas.clientes.exception.exceptions.InvalidEmailException;
-import br.com.mercadosallas.clientes.exception.exceptions.TelefoneNotFoundException;
+import br.com.mercadosallas.clientes.exception.exceptions.*;
+import br.com.mercadosallas.telefones.exception.exceptions.MinimoTelefoneException;
+import br.com.mercadosallas.telefones.exception.exceptions.TelefoneNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
-public class ErroValidationHandler {
+public class ErrorInterceptorHandler {
 
     @Autowired
     private MessageSource messageSource;
@@ -69,6 +68,12 @@ public class ErroValidationHandler {
         return new ErroDto(exception.getMessage());
     }
 
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ErroDto handleEmailAlreadyExistsException(EmailAlreadyExistsException exception) {
+        return new ErroDto(exception.getMessage());
+    }
+
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidEmailException.class)
     public ErroDto handleInvalidEmailException(InvalidEmailException exception) {
@@ -84,6 +89,12 @@ public class ErroValidationHandler {
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(TelefoneNotFoundException.class)
     public ErroDto handleTelefoneNotFoundException(TelefoneNotFoundException exception) {
+        return new ErroDto(exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ExceptionHandler(MinimoTelefoneException.class)
+    public ErroDto handleMinimoTelefoneException(MinimoTelefoneException exception) {
         return new ErroDto(exception.getMessage());
     }
 

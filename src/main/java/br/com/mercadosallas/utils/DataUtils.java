@@ -1,4 +1,4 @@
-package br.com.mercadosallas.clientes.utils;
+package br.com.mercadosallas.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -1,5 +1,6 @@
 package br.com.mercadosallas.clientes.dto;
 
+import br.com.mercadosallas.telefones.dto.TelefoneDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;

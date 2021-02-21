@@ -1,5 +1,6 @@
 package br.com.mercadosallas.clientes.dto;
 
+import br.com.mercadosallas.telefones.dto.TelefoneForm;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -25,7 +26,7 @@ public class ClienteForm {
     @JsonProperty("data_nascimento")
     private String dataNascimento;
 
-    @Email
+    @NotEmpty @NotNull @Email
     private String email;
 
     @Valid @Size(min=1, max=5)

@@ -1,4 +1,4 @@
-package br.com.mercadosallas.clientes;
+package br.com.mercadosallas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

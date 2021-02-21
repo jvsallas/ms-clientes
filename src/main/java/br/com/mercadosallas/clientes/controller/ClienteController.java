@@ -2,6 +2,8 @@ package br.com.mercadosallas.clientes.controller;
 
 import br.com.mercadosallas.clientes.dto.*;
 import br.com.mercadosallas.clientes.service.ClienteService;
+import br.com.mercadosallas.telefones.dto.TelefoneAtualizacaoForm;
+import br.com.mercadosallas.telefones.dto.TelefoneDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,29 +64,5 @@ public class ClienteController {
     public ResponseEntity<?> deletarCliente(@PathVariable String id) {
         clienteService.deletarCliente(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{idCliente}/telefones")
-    public ResponseEntity<List<TelefoneDto>> listarTelefonesDoCliente(@PathVariable String idCliente) {
-        List<TelefoneDto> telefones = clienteService.listarTelefones(idCliente);
-        return ResponseEntity.status(HttpStatus.OK).body(telefones);
-    }
-
-
-    @PutMapping("/{idCliente}/telefones/{idTelefone}")
-    @Transactional
-    public ResponseEntity<TelefoneDto> alterarNumeroTelefone(@PathVariable String idCliente, @PathVariable Long idTelefone,
-                                                             @RequestBody TelefoneAtualizacaoForm form) {
-        TelefoneDto telefoneDto = clienteService.alterarTelefone(idCliente, idTelefone, form);
-        return ResponseEntity.status(HttpStatus.OK).body(telefoneDto);
-
-    }
-
-    @DeleteMapping("/{idCliente}/telefones/{idTelefone}")
-    @Transactional
-    public ResponseEntity<?> deletarTelefone(@PathVariable String idCliente, @PathVariable Long idTelefone) {
-        clienteService.deletarTelefone(idCliente, idTelefone);
-        return ResponseEntity.noContent().build();
-
     }
 }
