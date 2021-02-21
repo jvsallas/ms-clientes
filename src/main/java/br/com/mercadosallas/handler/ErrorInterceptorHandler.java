@@ -3,6 +3,7 @@ package br.com.mercadosallas.handler;
 import br.com.mercadosallas.clientes.exception.dto.ErroDto;
 import br.com.mercadosallas.clientes.exception.dto.ErroFormularioDto;
 import br.com.mercadosallas.clientes.exception.exceptions.*;
+import br.com.mercadosallas.telefones.exception.exceptions.MaximoTelefoneException;
 import br.com.mercadosallas.telefones.exception.exceptions.MinimoTelefoneException;
 import br.com.mercadosallas.telefones.exception.exceptions.TelefoneNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,12 @@ public class ErrorInterceptorHandler {
     @ResponseStatus(code = HttpStatus.CONFLICT)
     @ExceptionHandler(MinimoTelefoneException.class)
     public ErroDto handleMinimoTelefoneException(MinimoTelefoneException exception) {
+        return new ErroDto(exception.getMessage());
+    }
+
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ExceptionHandler(MaximoTelefoneException.class)
+    public ErroDto handleMaximoTelefoneException(MaximoTelefoneException exception) {
         return new ErroDto(exception.getMessage());
     }
 

@@ -2,6 +2,7 @@ package br.com.mercadosallas.telefones.controller;
 
 import br.com.mercadosallas.telefones.dto.TelefoneAtualizacaoForm;
 import br.com.mercadosallas.telefones.dto.TelefoneDto;
+import br.com.mercadosallas.telefones.dto.TelefoneForm;
 import br.com.mercadosallas.telefones.service.TelefoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,14 @@ public class TelefoneController {
 
     @Autowired
     private TelefoneService telefoneService;
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<TelefoneDto> adicionarTelefoneAoCliente(@PathVariable String idCliente,
+                                                             @RequestBody TelefoneForm form) {
+        TelefoneDto telefoneDto = telefoneService.adicionarTelefoneAoCliente(idCliente, form);
+        return ResponseEntity.status(HttpStatus.CREATED).body(telefoneDto);
+    }
 
     @GetMapping
     public ResponseEntity<List<TelefoneDto>> listarTelefonesDoCliente(@PathVariable String idCliente) {

@@ -1,16 +1,17 @@
 package br.com.mercadosallas.telefones.service;
 
-import br.com.mercadosallas.telefones.exception.exceptions.MinimoTelefoneException;
-import br.com.mercadosallas.telefones.exception.exceptions.TelefoneNotFoundException;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.service.ClienteService;
 import br.com.mercadosallas.telefones.dto.TelefoneAtualizacaoForm;
 import br.com.mercadosallas.telefones.dto.TelefoneDto;
+import br.com.mercadosallas.telefones.dto.TelefoneForm;
+import br.com.mercadosallas.telefones.exception.exceptions.MaximoTelefoneException;
+import br.com.mercadosallas.telefones.exception.exceptions.MinimoTelefoneException;
+import br.com.mercadosallas.telefones.exception.exceptions.TelefoneNotFoundException;
 import br.com.mercadosallas.telefones.mapper.TelefoneMapper;
 import br.com.mercadosallas.telefones.model.TelefoneEntity;
 import br.com.mercadosallas.telefones.repository.TelefoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,22 @@ public class TelefoneService {
 
     @Autowired
     private ClienteService clienteService;
+
+
+    public TelefoneDto adicionarTelefoneAoCliente(String idCliente, TelefoneForm form) {
+        ClienteEntity clienteEntity = clienteService.buscarClientePorId(idCliente);
+
+        if (clienteEntity.getTelefones().size() == 5)
+            throw new MaximoTelefoneException("Não é possível adicionar mais que 5 telefones por cliente.");
+
+        TelefoneEntity telefoneEntity = TelefoneMapper.mapToEntity(form);
+        telefoneEntity.setIdCliente(idCliente);
+
+        TelefoneEntity telefone = telefoneRepository.save(telefoneEntity);
+
+        return TelefoneMapper.mapToDto(telefone);
+        
+    }
 
     public List<TelefoneDto> listarTelefonesDoCliente(String idCliente) {
 
@@ -66,14 +83,13 @@ public class TelefoneService {
     public void deletarTelefone(String idCliente, Long idTelefone) {
         ClienteEntity clienteEntity = clienteService.buscarClientePorId(idCliente);
 
-        List<TelefoneEntity> telefones = clienteEntity.getTelefones();
+        TelefoneEntity telefoneEntity = filtrarTelefonesPorId(idTelefone, clienteEntity.getTelefones());
 
-        if (telefones.size() == 1)
-            throw new MinimoTelefoneException("É necessário ter um ou mais telefones cadastrados.");
+        if (clienteEntity.getTelefones().size() == 1)
+            throw new MinimoTelefoneException("Não é possível deletar telefone. É necessário ter um ou mais telefones cadastrados.");
 
-        TelefoneEntity telefoneEntity = filtrarTelefonesPorId(idTelefone, telefones);
+        telefoneRepository.delete(telefoneEntity.getId());
 
-        telefoneRepository.delete(telefoneEntity);
     }
 
     private TelefoneEntity filtrarTelefonesPorId(Long idTelefone, List<TelefoneEntity> telefones) {

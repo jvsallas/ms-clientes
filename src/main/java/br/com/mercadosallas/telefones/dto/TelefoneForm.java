@@ -20,6 +20,6 @@ public class TelefoneForm {
 
     @NotNull
     @NotEmpty
-    @Length(max = 50)
+    @Length(max = 20)
     private String tipo;
 }
