@@ -1,6 +1,8 @@
 package br.com.mercadosallas.clientes.service;
 
-import br.com.mercadosallas.clientes.dto.*;
+import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoForm;
+import br.com.mercadosallas.clientes.dto.ClienteDto;
+import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.exception.exceptions.ClienteNotFoundException;
 import br.com.mercadosallas.clientes.exception.exceptions.CpfAlreadyExistsException;
 import br.com.mercadosallas.clientes.exception.exceptions.EmailAlreadyExistsException;
@@ -10,6 +12,8 @@ import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.repository.ClienteRepository;
 import br.com.mercadosallas.utils.DataUtils;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +25,14 @@ import static br.com.mercadosallas.utils.StringUtils.isNotNullOrBlank;
 @Service
 public class ClienteService {
 
+    private static final Logger log = LoggerFactory.getLogger(ClienteService.class);
+
     @Autowired
     private ClienteRepository clienteRepository;
 
     public ClienteDto adicionarCliente(ClienteForm clienteForm) {
+
+        log.info("Validando registro de cliente por cpf e email.");
 
         validarCpfJaCadastrado(clienteForm.getCpf());
 
@@ -34,12 +42,14 @@ public class ClienteService {
 
         ClienteEntity entity = clienteRepository.save(clienteEntity);
 
+        log.info("Cliente cadastrado com sucesso na base de dados.");
+
         return ClienteMapper.mapToDto(entity);
     }
 
-
-
     public List<ClienteDto> listarClientes() {
+
+        log.info("Listando todos clientes.");
 
         List<ClienteEntity> clientes = clienteRepository.findAll();
 
@@ -47,7 +57,6 @@ public class ClienteService {
             throw new ClienteNotFoundException("Nenhum cliente encontrado;");
 
         return ClienteMapper.mapToListDto(clientes);
-
     }
 
     public ClienteDto listarClientePorId(String id) {
@@ -58,6 +67,8 @@ public class ClienteService {
     }
 
     public ClienteDto alterarDadosCliente(String id, ClienteAtualizacaoForm form) {
+
+        log.info("Alterando dados do cliente.");
 
         ClienteEntity clienteEntity = buscarClientePorId(id);
 
@@ -75,12 +86,17 @@ public class ClienteService {
 
     public ClienteDto listarClientePorCpf(String cpf) {
 
+        log.info("Listando cliente pelo CPF.");
+
         ClienteEntity clienteEntity = buscarClientePorCpf(cpf);
 
         return ClienteMapper.mapToDto(clienteEntity);
     }
 
     public void deletarCliente(String id) {
+
+        log.info("Deletando cliente: {}", id);
+
         buscarClientePorId(id);
 
         clienteRepository.deleteById(id);

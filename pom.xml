@@ -8,7 +8,7 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.mercadosallas.clientes</groupId>
+	<groupId>br.com.mercadosallas</groupId>
 	<artifactId>ms-clientes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ms-clientes</name>

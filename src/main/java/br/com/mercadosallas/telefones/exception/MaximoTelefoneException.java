@@ -1,4 +1,4 @@
-package br.com.mercadosallas.telefones.exception.exceptions;
+package br.com.mercadosallas.telefones.exception;
 
 import lombok.Getter;
 
