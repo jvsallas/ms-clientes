@@ -1,9 +1,9 @@
 package br.com.mercadosallas.clientes.controller;
 
-import br.com.mercadosallas.clientes.dto.*;
+import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoForm;
+import br.com.mercadosallas.clientes.dto.ClienteDto;
+import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.service.ClienteService;
-import br.com.mercadosallas.telefones.dto.TelefoneAtualizacaoForm;
-import br.com.mercadosallas.telefones.dto.TelefoneDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +45,8 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }
 
-    @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<?> listarClientePorCpf(@PathVariable String cpf) {
+    @GetMapping("/cpf")
+    public ResponseEntity<?> listarClientePorCpf(@RequestParam String cpf) {
 
         ClienteDto clienteDto = clienteService.listarClientePorCpf(cpf);
 

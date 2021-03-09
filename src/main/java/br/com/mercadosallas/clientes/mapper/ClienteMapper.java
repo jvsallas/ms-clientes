@@ -3,8 +3,8 @@ package br.com.mercadosallas.clientes.mapper;
 import br.com.mercadosallas.clientes.dto.ClienteDto;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
-import br.com.mercadosallas.utils.DataUtils;
 import br.com.mercadosallas.telefones.mapper.TelefoneMapper;
+import br.com.mercadosallas.utils.DataUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
