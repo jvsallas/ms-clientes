@@ -38,7 +38,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> listarClientePorId(@PathVariable String id) {
+    public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable String id) {
 
         ClienteDto clienteDto = clienteService.listarClientePorId(id);
 
@@ -46,7 +46,7 @@ public class ClienteController {
     }
 
     @GetMapping("/cpf")
-    public ResponseEntity<?> listarClientePorCpf(@RequestParam String cpf) {
+    public ResponseEntity<ClienteDto> listarClientePorCpf(@RequestParam String cpf) {
 
         ClienteDto clienteDto = clienteService.listarClientePorCpf(cpf);
 
