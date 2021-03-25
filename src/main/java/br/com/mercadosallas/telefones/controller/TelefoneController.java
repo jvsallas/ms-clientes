@@ -4,9 +4,6 @@ import br.com.mercadosallas.telefones.dto.TelefoneAtualizacaoForm;
 import br.com.mercadosallas.telefones.dto.TelefoneDto;
 import br.com.mercadosallas.telefones.dto.TelefoneForm;
 import br.com.mercadosallas.telefones.service.TelefoneService;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +22,7 @@ public class TelefoneController {
     @PostMapping
     @Transactional
     public ResponseEntity<TelefoneDto> adicionarTelefoneAoCliente(@PathVariable String idCliente,
-                                                             @RequestBody TelefoneForm form) {
+                                                                  @RequestBody TelefoneForm form) {
         TelefoneDto telefoneDto = telefoneService.adicionarTelefoneAoCliente(idCliente, form);
         return ResponseEntity.status(HttpStatus.CREATED).body(telefoneDto);
     }

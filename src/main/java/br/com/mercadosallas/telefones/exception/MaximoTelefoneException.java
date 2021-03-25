@@ -1,15 +1,14 @@
 package br.com.mercadosallas.telefones.exception;
 
+import br.com.mercadosallas.handler.ClienteExceptionGeneric;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
-public class MaximoTelefoneException extends RuntimeException {
+public class MaximoTelefoneException extends ClienteExceptionGeneric {
     private static final long serialVersionUID = 4592362287975629929L;
 
-    private String message;
-
     public MaximoTelefoneException(String message) {
-        super(message);
-        this.message = message;
+        super(message, HttpStatus.CONFLICT.value());
     }
 }

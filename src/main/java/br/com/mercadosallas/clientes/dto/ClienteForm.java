@@ -14,22 +14,28 @@ import java.util.List;
 @Data
 public class ClienteForm {
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String nome;
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String sobrenome;
 
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String cpf;
 
     @JsonProperty("data_nascimento")
     private String dataNascimento;
 
-    @NotEmpty @NotNull @Email
+    @NotEmpty
+    @NotNull
+    @Email
     private String email;
 
-    @Valid @Size(min=1, max=5)
+    @Valid
+    @Size(min = 1, max = 5)
     private List<TelefoneForm> telefones;
 
 

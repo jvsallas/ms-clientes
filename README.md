@@ -200,8 +200,8 @@ Request Body: Vazio
 
 Response: 204 No Content.
 
-
 ### CRUD Telefone (/clientes/{idCliente}/telefones)
+
 Cada cliente pode ter no minímo um telefone cadastrado e no máximo cinco telefones.
 
 #### POST:
@@ -258,6 +258,7 @@ Response: 200 OK.
   }
 ]
 ```
+
 #### GET:
 
 Uri: /clientes/{idCliente}/telefones/{idTelefone}
@@ -283,7 +284,7 @@ Uri: /clientes/{idCliente}/telefones/{idTelefone}
 
 Descrição: Altera o telefone do cliente pelo id do telefone.
 
-Request Body: 
+Request Body:
 
 ```json
 {

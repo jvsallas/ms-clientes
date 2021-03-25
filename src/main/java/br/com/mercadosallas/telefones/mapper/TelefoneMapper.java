@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class TelefoneMapper {
 
-    public static TelefoneEntity mapToEntity(TelefoneForm telefoneForm){
+    public static TelefoneEntity mapToEntity(TelefoneForm telefoneForm) {
 
         TelefoneEntity telefoneEntity = new TelefoneEntity();
         telefoneEntity.setDdd(telefoneForm.getDdd());
@@ -20,7 +20,7 @@ public class TelefoneMapper {
     }
 
 
-    public static TelefoneDto mapToDto(TelefoneEntity telefoneEntity){
+    public static TelefoneDto mapToDto(TelefoneEntity telefoneEntity) {
 
         TelefoneDto telefoneDto = new TelefoneDto();
         telefoneDto.setId(telefoneEntity.getId());
@@ -31,11 +31,11 @@ public class TelefoneMapper {
         return telefoneDto;
     }
 
-    public static List<TelefoneEntity> mapToListEntity(List<TelefoneForm> telefones){
+    public static List<TelefoneEntity> mapToListEntity(List<TelefoneForm> telefones) {
         return telefones.stream().map(TelefoneMapper::mapToEntity).collect(Collectors.toList());
     }
 
-    public static List<TelefoneDto> mapToListDto(List<TelefoneEntity> telefones){
+    public static List<TelefoneDto> mapToListDto(List<TelefoneEntity> telefones) {
         return telefones.stream().map(TelefoneMapper::mapToDto).collect(Collectors.toList());
     }
 

@@ -1,6 +1,5 @@
 package br.com.mercadosallas.telefones.model;
 
-import br.com.mercadosallas.clientes.model.ClienteEntity;
 import lombok.Data;
 
 import javax.persistence.*;

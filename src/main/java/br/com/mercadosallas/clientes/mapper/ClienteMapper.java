@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ClienteMapper {
 
-    public static ClienteEntity mapToEntity(ClienteForm clienteForm){
+    public static ClienteEntity mapToEntity(ClienteForm clienteForm) {
 
         ClienteEntity clienteEntity = new ClienteEntity();
         clienteEntity.setNome(clienteForm.getNome());
@@ -25,7 +25,7 @@ public class ClienteMapper {
     }
 
 
-    public static ClienteDto mapToDto(ClienteEntity clienteEntity){
+    public static ClienteDto mapToDto(ClienteEntity clienteEntity) {
 
         ClienteDto clienteDto = new ClienteDto();
         clienteDto.setId(clienteEntity.getId());
@@ -40,7 +40,7 @@ public class ClienteMapper {
         return clienteDto;
     }
 
-    public static List<ClienteDto> mapToListDto(List<ClienteEntity> clientes){
+    public static List<ClienteDto> mapToListDto(List<ClienteEntity> clientes) {
         return clientes.stream().map(ClienteMapper::mapToDto).collect(Collectors.toList());
     }
 
