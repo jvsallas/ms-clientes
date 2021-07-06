@@ -11,11 +11,13 @@ import br.com.mercadosallas.clientes.mapper.ClienteMapper;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.repository.ClienteRepository;
 import br.com.mercadosallas.utils.DataUtils;
+import br.com.mercadosallas.utils.ValidadorCpf;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +32,12 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Transactional
     public ClienteDto adicionarCliente(ClienteForm clienteForm) {
 
         log.info("Validando registro de cliente por cpf e email.");
+
+        ValidadorCpf.validar(clienteForm.getCpf());
 
         validarCpfJaCadastrado(clienteForm.getCpf());
 
@@ -66,6 +71,7 @@ public class ClienteService {
         return ClienteMapper.mapToDto(clienteEntity);
     }
 
+    @Transactional
     public ClienteDto alterarDadosCliente(String id, ClienteAtualizacaoForm form) {
 
         log.info("Alterando dados do cliente.");

@@ -1,14 +1,8 @@
 package br.com.mercadosallas.handler;
 
+import br.com.caelum.stella.validation.InvalidStateException;
 import br.com.mercadosallas.clientes.exception.dto.ErroDto;
 import br.com.mercadosallas.clientes.exception.dto.ErroFormularioDto;
-import br.com.mercadosallas.clientes.exception.exceptions.ClienteNotFoundException;
-import br.com.mercadosallas.clientes.exception.exceptions.CpfAlreadyExistsException;
-import br.com.mercadosallas.clientes.exception.exceptions.EmailAlreadyExistsException;
-import br.com.mercadosallas.clientes.exception.exceptions.InvalidEmailException;
-import br.com.mercadosallas.telefones.exception.MaximoTelefoneException;
-import br.com.mercadosallas.telefones.exception.MinimoTelefoneException;
-import br.com.mercadosallas.telefones.exception.TelefoneNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -56,14 +50,20 @@ public class ErrorInterceptorHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DateTimeException.class)
-    public String handleDateTimeException(DateTimeException exception) {
-        return "Ocorreu um erro ao formatar a data";
+    public ErroDto handleDateTimeException(DateTimeException exception) {
+        return new ErroDto("Data Invalida.", HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErroDto handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
         return new ErroDto("Ocorreu um erro no tratamento dos dados. Verifique os dados preenchidos ou tente novamente mais tarde.");
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidStateException.class)
+    public ErroDto handleInvalidStateException(InvalidStateException exception) {
+        return new ErroDto("Cpf Invalido.", exception);
     }
 
 }
