@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class TelefoneService {
 
     private static final Logger log = LoggerFactory.getLogger(TelefoneService.class);
 
-
+    @Transactional
     public TelefoneDto adicionarTelefoneAoCliente(String idCliente, TelefoneForm form) {
 
         log.info("Adicionando telefone ao cliente: {}", idCliente);
@@ -52,6 +53,7 @@ public class TelefoneService {
 
     }
 
+    @Transactional(readOnly = true)
     public List<TelefoneDto> listarTelefonesDoCliente(String idCliente) {
 
         log.info("Listando todos telefones cadastrados do cliente.");
@@ -64,6 +66,7 @@ public class TelefoneService {
         return TelefoneMapper.mapToListDto(clienteEntity.getTelefones());
     }
 
+    @Transactional(readOnly = true)
     public TelefoneDto listarTelefonePorId(String idCliente, Long idTelefone) {
 
         log.info("Listando telefone do cliente pelo id.");
@@ -75,6 +78,7 @@ public class TelefoneService {
         return TelefoneMapper.mapToDto(telefoneEntity);
     }
 
+    @Transactional
     public TelefoneDto alterarTelefone(String idCliente, Long idTelefone, TelefoneAtualizacaoForm form) {
 
         log.info("Alterando telefone do cliente.");
@@ -97,6 +101,7 @@ public class TelefoneService {
         return TelefoneMapper.mapToDto(telefoneEntity);
     }
 
+    @Transactional
     public void deletarTelefone(String idCliente, Long idTelefone) {
 
         log.info("Deletando telefone {} do cliente {}", idCliente, idTelefone);
