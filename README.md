@@ -1,6 +1,6 @@
-# Mercado-Sallas
+# Sistema Cadastro Cliente - MS
 
-Sistema em Spring Boot MVC que possibilita realizar pedidos de produtos para um determinado cliente.
+Sistema em Spring Boot MVC que possibilita realizar de um cliente.
 
 [![Spring version](https://img.shields.io/badge/spring-2.3-green?logo=spring)](https://spring.io)
 
