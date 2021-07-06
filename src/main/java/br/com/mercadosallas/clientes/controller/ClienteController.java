@@ -7,9 +7,9 @@ import br.com.mercadosallas.clientes.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,6 +30,7 @@ public class ClienteController {
     }
 
     @GetMapping
+    @Transactional(readOnly = true)
     public ResponseEntity<List<ClienteDto>> listarClientes() {
 
         List<ClienteDto> clientes = clienteService.listarClientes();
@@ -38,6 +39,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @Transactional(readOnly = true)
     public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable String id) {
 
         ClienteDto clienteDto = clienteService.listarClientePorId(id);
@@ -46,6 +48,7 @@ public class ClienteController {
     }
 
     @GetMapping("/cpf")
+    @Transactional(readOnly = true)
     public ResponseEntity<ClienteDto> listarClientePorCpf(@RequestParam String cpf) {
 
         ClienteDto clienteDto = clienteService.listarClientePorCpf(cpf);
@@ -61,6 +64,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> deletarCliente(@PathVariable String id) {
         clienteService.deletarCliente(id);
         return ResponseEntity.noContent().build();
