@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+
 @Setter
 @Getter
 @ToString
-public class ClienteAtualizacaoForm {
+public class ClienteAtualizacaoPatchForm {
 
     @JsonProperty("nome")
     private String nome;
@@ -18,4 +20,8 @@ public class ClienteAtualizacaoForm {
 
     @JsonProperty("data_nascimento")
     private String dataNascimento;
+
+    @Email
+    @JsonProperty("email")
+    private String email;
 }
