@@ -1,13 +1,16 @@
 # Sistema Cadastro Cliente - MS
 
-Sistema em Spring Boot MVC que possibilita realizar de um cliente.
+Sistema backend desenvolvido em Java com Spring Boot MVC e Hibernate.
+
+A API de Clientes permite realizar as operações de CRUD para o gerenciamento de informações pessoais do cliente.
+
+A API de Telefones permite realizar  as operações de CRUD para o gerenciamento de telefones vinculados a um cliente.
 
 [![Spring version](https://img.shields.io/badge/spring-2.3-green?logo=spring)](https://spring.io)
 
 ## Overview clientes
 
-A API de Clientes permite realizar as operações de CRUD para o gerenciamento de informações pessoais do cliente.
-A API de Telefones permite realizar  as operações de CRUD para o gerenciamento de telefones vinculados a um cliente.
+
 
 Url: http://localhost:8080
 
