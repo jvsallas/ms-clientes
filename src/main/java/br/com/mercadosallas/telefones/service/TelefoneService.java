@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.mercadosallas.utils.StringUtils.isNotNullOrBlank;
 
@@ -39,7 +40,7 @@ public class TelefoneService {
 
         ClienteEntity clienteEntity = clienteService.buscarClientePorId(idCliente);
 
-        if (clienteEntity.getTelefones().size() == 5)
+        if (clienteEntity.getTelefones().size() >= 5)
             throw new MaximoTelefoneException("Não é possível adicionar mais que 5 telefones por cliente.");
 
         TelefoneEntity telefoneEntity = TelefoneMapper.mapToEntity(form);
@@ -110,20 +111,27 @@ public class TelefoneService {
 
         TelefoneEntity telefoneEntity = filtrarTelefonesPorId(idTelefone, clienteEntity.getTelefones());
 
-        if (clienteEntity.getTelefones().size() == 1)
+        if (clienteEntity.getTelefones().size() <= 1)
             throw new MinimoTelefoneException("Não é possível deletar telefone. É necessário ter um ou mais telefones cadastrados.");
 
-        telefoneRepository.delete(telefoneEntity.getId());
+        telefoneRepository.deletar(telefoneEntity.getId());
 
         log.info("Telefone deltado com sucesso.");
 
     }
 
     private TelefoneEntity filtrarTelefonesPorId(Long idTelefone, List<TelefoneEntity> telefones) {
-        return telefones.stream().filter(
-                t -> t.getId().equals(idTelefone)).findFirst()
-                .orElseThrow(
-                        () -> new TelefoneNotFoundException(String.format("Telefone não encontrado para o id %s", idTelefone)));
+        return telefones.stream().filter(t -> t.getId().equals(idTelefone)).findFirst()
+                .orElseThrow(() -> new TelefoneNotFoundException(String.format("Telefone não encontrado para o id %s", idTelefone)));
+    }
+
+    @Transactional
+    public void deletarTelefonesDoCliente(String idCliente){
+        Optional<List<TelefoneEntity>> optListaTelefonesCliente = telefoneRepository.findAllByIdCliente(idCliente);
+//        optListaTelefonesCliente.ifPresent(List::clear);
+        if (optListaTelefonesCliente.isPresent())
+            telefoneRepository.deletarTelefonesDoCliente(idCliente);
+
     }
 
 }

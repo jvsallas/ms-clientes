@@ -1,6 +1,7 @@
 package br.com.mercadosallas.clientes.service;
 
-import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoForm;
+import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoPatchForm;
+import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoPutForm;
 import br.com.mercadosallas.clientes.dto.ClienteDto;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.exception.exceptions.ClienteNotFoundException;
@@ -10,6 +11,9 @@ import br.com.mercadosallas.clientes.exception.exceptions.InvalidEmailException;
 import br.com.mercadosallas.clientes.mapper.ClienteMapper;
 import br.com.mercadosallas.clientes.model.ClienteEntity;
 import br.com.mercadosallas.clientes.repository.ClienteRepository;
+import br.com.mercadosallas.handler.ClienteExceptionGeneric;
+import br.com.mercadosallas.telefones.mapper.TelefoneMapper;
+import br.com.mercadosallas.telefones.service.TelefoneService;
 import br.com.mercadosallas.utils.DataUtils;
 import br.com.mercadosallas.utils.ValidadorCpf;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -19,10 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static br.com.mercadosallas.utils.StringUtils.isNotNullOrBlank;
+import static java.util.Objects.nonNull;
 
 @Service
 public class ClienteService {
@@ -31,6 +38,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private TelefoneService telefoneService;
 
     @Transactional
     public ClienteDto adicionarCliente(ClienteForm clienteForm) {
@@ -66,6 +76,15 @@ public class ClienteService {
         return ClienteMapper.mapToListDto(clientes);
     }
 
+    public ClienteDto listarClientePorCpf(String cpf) {
+
+        log.info("Listando cliente pelo CPF.");
+
+        ClienteEntity clienteEntity = buscarClientePorCpf(cpf);
+
+        return ClienteMapper.mapToDto(clienteEntity);
+    }
+
     public ClienteDto listarClientePorId(String id) {
 
         ClienteEntity clienteEntity = buscarClientePorId(id);
@@ -74,7 +93,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public ClienteDto alterarDadosCliente(String id, ClienteAtualizacaoForm form) {
+    public ClienteDto alterarDadosCliente(String id, ClienteAtualizacaoPatchForm form) {
 
         log.info("Alterando dados do cliente.");
 
@@ -89,16 +108,44 @@ public class ClienteService {
         if (isNotNullOrBlank(form.getDataNascimento()))
             clienteEntity.setDataNascimento(DataUtils.formatar(form.getDataNascimento()));
 
+        if (isNotNullOrBlank(form.getDataNascimento()))
+            clienteEntity.setDataNascimento(DataUtils.formatar(form.getDataNascimento()));
+
+        if (isNotNullOrBlank(form.getEmail()))
+            clienteEntity.setEmail(form.getEmail());
+
         return ClienteMapper.mapToDto(clienteEntity);
     }
 
-    public ClienteDto listarClientePorCpf(String cpf) {
+    @Transactional
+    public ClienteDto alterarDadosCliente(String id, @Valid ClienteAtualizacaoPutForm form) {
 
-        log.info("Listando cliente pelo CPF.");
+        log.info("Validando dados de entrada.");
 
-        ClienteEntity clienteEntity = buscarClientePorCpf(cpf);
+        ClienteEntity dadosExistentes = buscarClientePorId(id);
 
-        return ClienteMapper.mapToDto(clienteEntity);
+        if (nonNull(form.getCpf()) && !Objects.equals(form.getCpf(), dadosExistentes.getCpf()))
+            throw new ClienteExceptionGeneric("Não é possivel alterar o CPF", 409);
+
+        if (nonNull(form.getEmail()) && !Objects.equals(form.getEmail(), dadosExistentes.getEmail()))
+            throw new ClienteExceptionGeneric("Não é possivel alterar o email", 409);
+
+        log.info("Alterando dados do cliente.");
+
+        dadosExistentes.setNome(form.getNome());
+        dadosExistentes.setSobrenome(form.getSobrenome());
+        dadosExistentes.setDataNascimento(DataUtils.formatar(form.getDataNascimento()));
+        dadosExistentes.setEmail(form.getEmail());
+
+        Optional.of(dadosExistentes.getTelefones()).ifPresent(List::clear);
+
+        dadosExistentes.getTelefones().addAll(TelefoneMapper.mapToListEntity(form.getTelefones()));
+
+        ClienteEntity entity = clienteRepository.save(dadosExistentes);
+
+        log.info("Cliente alterado com sucesso na base de dados.");
+
+        return ClienteMapper.mapToDto(entity);
     }
 
     public void deletarCliente(String id) {

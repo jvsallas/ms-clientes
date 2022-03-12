@@ -1,7 +1,10 @@
 package br.com.mercadosallas.clientes.dto;
 
 import br.com.mercadosallas.telefones.dto.TelefoneForm;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -9,10 +12,12 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class ClienteForm {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ClienteAtualizacaoPutForm {
 
     @NotNull
     @NotEmpty
@@ -22,8 +27,6 @@ public class ClienteForm {
     @NotEmpty
     private String sobrenome;
 
-    @NotNull
-    @NotEmpty
     private String cpf;
 
     @NotNull
@@ -31,8 +34,6 @@ public class ClienteForm {
     @JsonProperty("data_nascimento")
     private String dataNascimento;
 
-    @NotEmpty
-    @NotNull
     @Email
     private String email;
 

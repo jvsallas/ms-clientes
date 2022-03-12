@@ -30,9 +30,9 @@ public class ClienteController {
 
     @GetMapping
     @Transactional(readOnly = true)
-    public ResponseEntity<Object> listarClientes(@RequestParam (required = false) String cpf) {
+    public ResponseEntity<List<ClienteDto>> listarClientes() {
 
-        Object clientes = clienteService.listarClientes(cpf);
+        List<ClienteDto> clientes = clienteService.listarClientes();
 
         return ResponseEntity.status(HttpStatus.OK).body(clientes);
     }
@@ -42,6 +42,15 @@ public class ClienteController {
     public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable String id) {
 
         ClienteDto clienteDto = clienteService.listarClientePorId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
+    }
+
+    @GetMapping("/cpf")
+    @Transactional(readOnly = true)
+    public ResponseEntity<ClienteDto> listarClientePorCpf(@RequestParam String cpf) {
+
+        ClienteDto clienteDto = clienteService.listarClientePorCpf(cpf);
 
         return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }

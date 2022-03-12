@@ -8,12 +8,16 @@ import org.springframework.http.HttpStatus;
 @Setter
 public class ClienteExceptionGeneric extends RuntimeException {
 
-    private String message;
     private HttpStatus httpStatus;
 
     public ClienteExceptionGeneric(String message, int status) {
         super(message);
-        this.message = message;
         this.httpStatus = HttpStatus.valueOf(status);
+    }
+
+    public ClienteExceptionGeneric(String message) {
+        super(message);
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+
     }
 }
