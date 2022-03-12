@@ -1,6 +1,6 @@
 package br.com.mercadosallas.clientes.controller;
 
-import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoForm;
+import br.com.mercadosallas.clientes.dto.ClienteAtualizacaoPatchForm;
 import br.com.mercadosallas.clientes.dto.ClienteDto;
 import br.com.mercadosallas.clientes.dto.ClienteForm;
 import br.com.mercadosallas.clientes.service.ClienteService;
@@ -30,9 +30,9 @@ public class ClienteController {
 
     @GetMapping
     @Transactional(readOnly = true)
-    public ResponseEntity<List<ClienteDto>> listarClientes() {
+    public ResponseEntity<Object> listarClientes(@RequestParam (required = false) String cpf) {
 
-        List<ClienteDto> clientes = clienteService.listarClientes();
+        Object clientes = clienteService.listarClientes(cpf);
 
         return ResponseEntity.status(HttpStatus.OK).body(clientes);
     }
@@ -57,7 +57,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ClienteDto> alterarDadosCliente(@PathVariable String id, @RequestBody ClienteAtualizacaoForm form) {
+    public ResponseEntity<ClienteDto> alterarDadosCliente(@PathVariable String id, @RequestBody ClienteAtualizacaoPatchForm form) {
         ClienteDto clienteDto = clienteService.alterarDadosCliente(id, form);
         return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }
