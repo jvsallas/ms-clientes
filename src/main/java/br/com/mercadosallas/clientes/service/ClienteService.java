@@ -52,7 +52,9 @@ public class ClienteService {
         return ClienteMapper.mapToDto(entity);
     }
 
-    public List<ClienteDto> listarClientes() {
+    public Object listarClientes(String cpf) {
+        if (cpf != null)
+            return listarClientePorCpf(cpf);
 
         log.info("Listando todos clientes.");
 

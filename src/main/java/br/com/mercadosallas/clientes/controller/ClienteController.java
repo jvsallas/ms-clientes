@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/clientes")
@@ -31,9 +30,9 @@ public class ClienteController {
 
     @GetMapping
     @Transactional(readOnly = true)
-    public ResponseEntity<List<ClienteDto>> listarClientes() {
+    public ResponseEntity<Object> listarClientes(@RequestParam (required = false) String cpf) {
 
-        List<ClienteDto> clientes = clienteService.listarClientes();
+        Object clientes = clienteService.listarClientes(cpf);
 
         return ResponseEntity.status(HttpStatus.OK).body(clientes);
     }
@@ -43,15 +42,6 @@ public class ClienteController {
     public ResponseEntity<ClienteDto> listarClientePorId(@PathVariable String id) {
 
         ClienteDto clienteDto = clienteService.listarClientePorId(id);
-
-        return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
-    }
-
-    @GetMapping("/cpf")
-    @Transactional(readOnly = true)
-    public ResponseEntity<ClienteDto> listarClientePorCpf(@RequestParam String cpf) {
-
-        ClienteDto clienteDto = clienteService.listarClientePorCpf(cpf);
 
         return ResponseEntity.status(HttpStatus.OK).body(clienteDto);
     }
