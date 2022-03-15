@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,7 +72,7 @@ public class ClienteService {
         List<ClienteEntity> clientes = clienteRepository.findAll();
 
         if (clientes.isEmpty())
-            throw new ClienteNotFoundException("Nenhum cliente encontrado;");
+            return new ArrayList<>();
 
         return ClienteMapper.mapToListDto(clientes);
     }
